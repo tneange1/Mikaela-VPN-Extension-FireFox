@@ -1,0 +1,46 @@
+name: build
+# Собирает ZIP для addons.mozilla.org. Список серверов берётся из репозитория Chrome-расширения (его обновляет бот).
+on:
+  push:
+    branches: [main]
+    paths: ['extension/**', '.github/workflows/build.yml']
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: build
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Проверка и сборка
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/tneange1/Mikaela-VPN-Chrome-Extension/main/servers.json -o extension/servers.json
+          python3 - <<'PY'
+          import json, sys
+          s = json.load(open('extension/servers.json'))
+          json.load(open('extension/manifest.json'))
+          if not s['servers'] or any('REPLACE' in json.dumps(x) for x in s['servers']):
+              sys.exit('servers.json пуст или содержит заглушки')
+          PY
+          echo "VERSION=$(python3 -c "import json;print(json.load(open('extension/manifest.json'))['version'])")" >> "$GITHUB_ENV"
+          echo "HASH=$(sha1sum extension/servers.json | cut -c1-7)" >> "$GITHUB_ENV"
+          mkdir dist
+          (cd extension && zip -qr ../dist/mikaela-vpn-firefox.zip . -x '*.DS_Store')
+          unzip -l dist/mikaela-vpn-firefox.zip | tail -1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mikaela-vpn-firefox
+          path: dist/*
+      - name: Релиз latest (перезаписывается)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest dist/*.zip --latest \
+            --title "Mikaela VPN для Firefox v${VERSION}" \
+            --notes "Версия ${VERSION}, список серверов ${HASH}. mikaela-vpn-firefox.zip — для addons.mozilla.org."

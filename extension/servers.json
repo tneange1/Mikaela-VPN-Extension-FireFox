@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "servers": [
+    {"id": "nl1", "name": "NL", "code": "NL", "scheme": "https", "host": "nl1.mikaelavpn.xyz", "port": 9443, "username": "free", "password": "OLlsCGnS2i55WUoG"}
+  ]
+}

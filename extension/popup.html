@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mikaela VPN</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+<header><img src="icons/icon128.png" alt="" width="28" height="28"><b>Mikaela VPN</b><span class="tag" id="tag"></span></header>
+<main>
+  <section class="hero">
+    <button id="power" class="power" aria-label="VPN"><svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.4 6.8a8 8 0 1 0 11.2 0"/></svg></button>
+    <div class="st" id="st"></div>
+    <div class="sub" id="sub"></div>
+  </section>
+  <section class="card" id="srvCard">
+    <div class="lbl" id="lblSrv"></div>
+    <button class="sel" id="sel"><span class="cc" id="selCc">··</span><span class="nm" id="selNm"></span><span class="ms" id="selMs"></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></button>
+  </section>
+  <section class="list hide" id="list"></section>
+  <p class="err" id="err"></p>
+  <section class="promo">
+    <div class="pt" id="pt"></div><div class="pd" id="pd"></div>
+    <div class="row"><button class="btn" id="bApp"></button><button class="btn ghost" id="bBot"></button></div>
+  </section>
+</main>
+<footer><a href="#" id="fPriv"></a><span>·</span><a href="#" id="fSup"></a></footer>
+<script src="popup.js"></script>
+</body></html>

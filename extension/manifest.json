@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "short_name": "Mikaela VPN",
+  "description": "__MSG_extDesc__",
+  "version": "1.0.0",
+  "default_locale": "en",
+  "icons": { "16": "icons/off16.png", "32": "icons/off32.png", "48": "icons/off48.png", "128": "icons/icon128.png" },
+  "action": {
+    "default_title": "Mikaela VPN",
+    "default_popup": "popup.html",
+    "default_icon": { "16": "icons/off16.png", "32": "icons/off32.png", "48": "icons/off48.png" }
+  },
+  "background": { "scripts": ["background.js"] },
+  "permissions": ["proxy", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "mikaela-vpn@mikaelavpn.xyz",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": { "required": ["browsingActivity"] }
+    }
+  }
+}
